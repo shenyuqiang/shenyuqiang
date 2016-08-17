@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>index</title>
+	<style>
+		#container{
+			width: 1000px;
+			height: 550px;
+			margin: 0 auto;
+			border: 1px solid #000;
+		}
+		#ground{
+			width: 1000px;
+			height: 500px;
+			background: #ccc;
+			position: relative;
+		}
+		#control{
+			width: 1000px;
+			height: 50px;
+			line-height: 50px;
+		}
+		#brand{
+			float: left;
+			margin-left: 20px;
+		}
+		#buttons{
+			float: right;
+			margin-right: 20px;
+		}
+		.block{
+			width: 20px;
+			height: 20px;
+			background: orange;
+			float: left;
+		}
+		.snake-block{
+			background: #f00;
+			position: absolute;
+			top: 60px;
+		}
+		.food-block{
+			background: #0f0;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="ground"></div>
+		<div id="control">
+			<div id="brand">JavaScript 贪食蛇</div>
+			<div id="buttons">
+				<button id="btn-start">开始</button>
+				<button id="btn-pause">暂停</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		(function(){
+			//构建草场
+			var oGround = document.getElementById("ground");
+			for(var i = 0; i < 25 * 50; i++){
+				var oDiv = document.createElement('div');
+				oDiv.className = 'block';
+				oGround.appendChild(oDiv);
+			}
+			//创建蛇
+			var snakeBody = [];
+			for(var i=0; i<3; i++){
+				var oDiv = document.createElement('div');
+				oDiv.className = 'block snake-block';
+				oDiv.style.left = (3 - i) * 20 +'px';
+				oGround.appendChild(oDiv);
+				snakeBody.push(oDiv);
+			}
+			//创建食物
+			do{
+				var bFlag = true;//一个标识位，true表示找到合适位置，false表示有重合
+				var iLeft = parseInt(Math.random() * 50) * 20;//0~980
+				var iTop = parseInt(Math.random() * 25) * 20;//0~480
+				for(var i=0; i<snakeBody.length; i++){
+				if(snakeBody[i].offsetLeft == iLeft && snakeBody[i].offsetTop == iTop){
+					bFlag = false;
+					}//如果位置与蛇身位置重复，则bFlag改为false
+				}
+			}while(!bFlag);
+			var oFood = document.createElement('div');
+			oFood.className = ('block food-block');
+			oFood.style.left = iLeft +'px';
+			oFood.style.top = iTop +'px';
+			oGround.appendChild(oFood);
+			
+			//蛇吃食物
+			//增长身体
+			//判断死亡
+		})();
+	</script>
+</body>
+</html>
